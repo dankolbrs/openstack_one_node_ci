@@ -11,17 +11,17 @@ def osa, common
 stage 'Deployment'
 // *******************************
 
-//echo 'Deploying OpenStack using OSA for single node'
-//node('master') {
-//    
-//    // Load the external functions using master since the git command
-//    // might not be available at the agent yet
-//    fileLoader.withGit('https://github.com/CasJ/openstack_one_node_ci.git', 'master', null, '') {
-//        common = fileLoader.load('common.groovy');
-//        osa = fileLoader.load('osa_aio.functions.groovy');
-//    }
-//    
-//}
+echo 'Deploying OpenStack using OSA for single node'
+node('master') {
+    
+    // Load the external functions using master since the git command
+    // might not be available at the agent yet
+    fileLoader.withGit('https://github.com/CasJ/openstack_one_node_ci.git', 'master', null, '') {
+        common = fileLoader.load('common.groovy');
+        osa = fileLoader.load('osa_aio.functions.groovy');
+    }
+    
+}
 
 //node('agent-xl') {
 //    
@@ -39,7 +39,7 @@ stage 'Post-Deployment Validation'
 // *******************************
 
 echo 'Running tests to validate the OpenStack deployment'
-node('agent-xl') {
+node('bme-jenkins-slave-n01') {
    
     // Install latest version of Tempest in the host
     osa.install_tempest()
